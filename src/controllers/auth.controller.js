@@ -25,47 +25,46 @@ exports.register = async (req, res) => {
     const token = jwt.sign({ username }, process.env.JWT_SECRET, {
         expiresIn: 86400 // 24 hours
     });
-    if (checkUser == 'null') {
-        const userData = {
-            username: username,
-            name: req.body.name,
-            password: bcrypt.hashSync(req.body.password, 8),
-            createdAt: now,
-            updatedAt: now
-        };
-
-        User.create(userData).then(user => {
-            res.status(201).send({
-                statusCode: 201,
-                statusMessage: 'Created',
-                statusDescription: 'Resource created',
-                result: {
-                    'errorCode': '00',
-                    'errorMessage': 'Success',
-                    'data': {
-                        "accessToken": token,
-                        "accessTokenExpiresAt": '',
-                        'accessTokenExpiresIn': '',
-                        'refreshToken': '',
-                        'refreshTokenExpiresAt': '',
-                        'refreshTokenExpiresIn': '',
-                    },
-                },
-            });
-        }).catch(err => {
-            res.status(400).send({
-                statusCode: 400,
-                statusMessage: 'Bad Request',
-                statusDescription: 'Request is invalid, missing parameters?'
-            });
-        });
-    } else {
+    if (checkUser != 'null') {
         res.status(409).send({
             statusCode: 409,
             statusMessage: 'Username already exist',
             statusDescription: 'Username already exist, please try another username'
         });
     }
+    const userData = {
+        username: username,
+        name: req.body.name,
+        password: bcrypt.hashSync(req.body.password, 8),
+        createdAt: now,
+        updatedAt: now
+    };
+
+    User.create(userData).then(user => {
+        res.status(201).send({
+            statusCode: 201,
+            statusMessage: 'Created',
+            statusDescription: 'Resource created',
+            result: {
+                'errorCode': '00',
+                'errorMessage': 'Success',
+                'data': {
+                    "accessToken": token,
+                    "accessTokenExpiresAt": '',
+                    'accessTokenExpiresIn': '',
+                    'refreshToken': '',
+                    'refreshTokenExpiresAt': '',
+                    'refreshTokenExpiresIn': '',
+                },
+            },
+        });
+    }).catch(err => {
+        res.status(400).send({
+            statusCode: 400,
+            statusMessage: 'Bad Request',
+            statusDescription: 'Request is invalid, missing parameters?'
+        });
+    });
 
 };
 
