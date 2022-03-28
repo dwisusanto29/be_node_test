@@ -1,5 +1,5 @@
 {
-  "name": "carkimo",
+  "name": "waletDev",
   "version": "1.0.0",
   "description": "Porting apps to nodejs",
   "main": "server.js",
