@@ -12,7 +12,7 @@ module.exports = function (app) {
         next();
     });
 
-    app.post('/register', multerNone, controller.register);
+    app.post('/v1/user/create', multerNone, controller.register);
     app.post('/login', multerNone, controller.signIn);;
 };
 

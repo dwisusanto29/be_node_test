@@ -5,10 +5,10 @@ const now = new Date();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-exports.checkUserRegistered = async function (username) {
+exports.checkUserRegistered = function (name) {
     return User.findOne({
         where: {
-            username: username,
+            username: name,
         }
     }).then(function (user) {
         if (user) {
@@ -21,7 +21,7 @@ exports.checkUserRegistered = async function (username) {
 
 exports.register = async (req, res) => {
     const username = req.body.username;
-    const checkUser = await this.checkUserRegistered(username);
+    const checkUser = this.checkUserRegistered(username);
     const token = jwt.sign({ username }, process.env.JWT_SECRET, {
         expiresIn: 86400 // 24 hours
     });
@@ -30,7 +30,6 @@ exports.register = async (req, res) => {
             username: username,
             name: req.body.name,
             password: bcrypt.hashSync(req.body.password, 8),
-            verified: 0,
             createdAt: now,
             updatedAt: now
         };

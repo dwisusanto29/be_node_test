@@ -10,7 +10,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true,
         },
         balance: {
-            type: Sequelize.Double,
+            type: Sequelize.DECIMAL,
             allowNull: null,
         },
         createdAt: {

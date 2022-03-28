@@ -14,7 +14,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
         },
         amount: {
-            type: Sequelize.Double,
+            type: Sequelize.DECIMAL,
             allowNull: null,
         },
         createdAt: {
